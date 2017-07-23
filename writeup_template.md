@@ -47,18 +47,6 @@ I started by reading in all the `vehicle` and `non-vehicle` images and explored 
 I then explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  
 
 #### 2. Explain how you settled on your final choice of HOG parameters.
-### TODO: Tweak these parameters and see how the results change.
-color_space = 'YCrCb' # Can be RGB, HSV, LUV, HLS, YUV, YCrCb
-orient = 12  # HOG orientations
-pix_per_cell = 10 # HOG pixels per cell
-cell_per_block = 2 # HOG cells per block
-hog_channel = "ALL" # Can be 0, 1, 2, or "ALL"
-spatial_size = (16, 16) # Spatial binning dimensions
-hist_bins = 16    # Number of histogram bins
-spatial_feat = True # Spatial features on or off
-hist_feat = True # Histogram features on or off
-hog_feat = True # HOG features on or off
-y_start_stop = [None, None] # Min and max in y to search in slide_window()
 
 I tried various combinations of parameters for color space, spatial binning, color histogram and HOG features. I know that RGB color space is unstable to illumination changes therefore I decided to use `YCrCb` color space. As HOG parameters I used, 12 different orientations, 10 pixels per cells and 2 cells per block. In the beginning, I only extracted HOG features from the first channel, luminance, of the image. However, I found out that using 3 channels improves the performance which in turn increases processing time per image a lot. I used 16 bins for color histogram and 16x16 spatial binning. 
 
@@ -108,8 +96,6 @@ Here's a [link to my video result](https://youtu.be/oclIsCA3By0)
 #### 2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
 
 I used heatmap approach suggested in the tutorials. For this, first, I extracted car candidates in the form of bounding box, then I stored bounding boxes from each frame in a fixed size queue structure implemented in `vehicle_detection()` class. When detection result is queried, I simply sum all the inner areas of detection windows inside the queue and represent them as heatmap. I used 25 for both the queue size and threshold level. In order to eliminate false detections, I threshold resulting heatmap and use `label()` function to label uniquely each connected components in the thresholded heatmap. Then, I constructed bounding boxes to cover the area of each blob detected.  
-
-Here's an example result showing the heatmap from a series of frames of video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
 
 ### Here are six frames and their corresponding heatmaps:
 
