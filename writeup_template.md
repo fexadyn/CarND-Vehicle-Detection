@@ -10,26 +10,25 @@ The goals / steps of this project are the following:
 * Estimate a bounding box for vehicles detected.
 
 [//]: # (Image References)
-[image1]: ./examples/carnotcar.png
-[image2]: ./examples/HOG_example.jpg
-[image3]: ./examples/sliding_windows.jpg
-[image4a]: ./examples/output_4_0.jpg
-[image4b]: ./examples/output_4_1.jpg
-[image4c]: ./examples/output_4_2.jpg
-[image4d]: ./examples/output_4_3.jpg
-[image4e]: ./examples/output_4_4.jpg
-[image5a]: ./examples/output_7_0.png
-[image5b]: ./examples/output_7_1.png
-[image5c]: ./examples/output_7_2.png
-[image5d]: ./examples/output_7_3.png
-[image5e]: ./examples/output_7_4.png
-[image6a]: ./examples/output_7_0.png
-[image6b]: ./examples/output_7_1.png
-[image6c]: ./examples/output_7_2.png
-[image6d]: ./examples/output_7_3.png
-[image6e]: ./examples/output_7_4.png
-[image7]: ./examples/detection.png
-[video1]: ./project_video.mp4
+[image1]: ./writeup_images/carnotcar.png
+[image2]: ./writeup_images/HOG_example.jpg
+[image3]: ./writeup_images/sliding_windows.jpg
+[image4a]: ./writeup_images/output_4_0.jpg
+[image4b]: ./writeup_images/output_4_1.jpg
+[image4c]: ./writeup_images/output_4_2.jpg
+[image4d]: ./writeup_images/output_4_3.jpg
+[image4e]: ./writeup_images/output_4_4.jpg
+[image5a]: ./writeup_images/output_7_0.png
+[image5b]: ./writeup_images/output_7_1.png
+[image5c]: ./writeup_images/output_7_2.png
+[image5d]: ./writeup_images/output_7_3.png
+[image5e]: ./writeup_images/output_7_4.png
+[image6a]: ./writeup_images/output_7_0.png
+[image6b]: ./writeup_images/output_7_1.png
+[image6c]: ./writeup_images/output_7_2.png
+[image6d]: ./writeup_images/output_7_3.png
+[image6e]: ./writeup_images/output_7_4.png
+[image7]: ./writeup_images/detection.png
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
 ### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
