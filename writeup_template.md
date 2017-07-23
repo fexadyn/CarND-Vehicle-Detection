@@ -107,7 +107,7 @@ Here's a [link to my video result](https://youtu.be/oclIsCA3By0)
 
 ####2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
 
-I used heatmap approach suggested in the tutorials. For this, first, I extracted car candidates in the form of bounding box, then I stored bounding boxes from each frame in a fixed size queue structure implemented in `vehicle_detection()` class. When detection result is queried, I simply sum all the inner areas of detection windows inside the queue and represent them as heatmap. In order to eliminate false detections, I threshold resulting heatmap and use `label()` function to label uniquely each connected components in the thresholded heatmap. Then, I constructed bounding boxes to cover the area of each blob detected.  
+I used heatmap approach suggested in the tutorials. For this, first, I extracted car candidates in the form of bounding box, then I stored bounding boxes from each frame in a fixed size queue structure implemented in `vehicle_detection()` class. When detection result is queried, I simply sum all the inner areas of detection windows inside the queue and represent them as heatmap. I used 25 for both the queue size and threshold level. In order to eliminate false detections, I threshold resulting heatmap and use `label()` function to label uniquely each connected components in the thresholded heatmap. Then, I constructed bounding boxes to cover the area of each blob detected.  
 
 Here's an example result showing the heatmap from a series of frames of video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
 
@@ -124,9 +124,12 @@ Here's an example result showing the heatmap from a series of frames of video, t
 
 ---
 
-###Discussion
+### Discussion
 
-####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
+#### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+1. First of all, processing time is an issue. However there are many points to optimize to decrease processing time per frame. Currently, HOG features are calculated for each sliding window but most of the sliding windows are overlapping with each other. Therefore, we can calculate HOG features once for an image and crop it accordingly.
 
+2. Number and scale of sliding windows affect detection results. It is possible to get your detections better fit on vehicle if you increase the number of sliding windows. But this increases the processing time as well.
+
+3. Heatmap approach is simple and works well in average. However, it's is hard to decide heatmap threshold parameter and it definitely affects the shape of the bounding box fitted on the vehicle. Morphological operations on the heatmap may produce better results.
