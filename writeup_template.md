@@ -46,7 +46,7 @@ I started by reading in all the `vehicle` and `non-vehicle` images and explored 
 
 I then explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  
 
-####2. Explain how you settled on your final choice of HOG parameters.
+#### 2. Explain how you settled on your final choice of HOG parameters.
 ### TODO: Tweak these parameters and see how the results change.
 color_space = 'YCrCb' # Can be RGB, HSV, LUV, HLS, YUV, YCrCb
 orient = 12  # HOG orientations
@@ -62,7 +62,7 @@ y_start_stop = [None, None] # Min and max in y to search in slide_window()
 
 I tried various combinations of parameters for color space, spatial binning, color histogram and HOG features. I know that RGB color space is unstable to illumination changes therefore I decided to use `YCrCb` color space. As HOG parameters I used, 12 different orientations, 10 pixels per cells and 2 cells per block. In the beginning, I only extracted HOG features from the first channel, luminance, of the image. However, I found out that using 3 channels improves the performance which in turn increases processing time per image a lot. I used 16 bins for color histogram and 16x16 spatial binning. 
 
-####3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
+#### 3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
 
 I trained a linear SVM using all the images from car and not car dataset. I only used GIT and KITTI dataset images. I decided to use all the feature types in the training process including color histogram, spatial binning and HOG features. After concatenating all the features, I used `StandardScaler()` to scale different types of features to similar ranges. Then, used Linear SVM to train car/notcar classifier. SVM training took just ~7 seconds which is way faster than using Neural Networks!!! That's why I like traditional CV methods =) and I got 0.993 accuracy. Of course, this is a very simple one class classification problem.
 
@@ -73,9 +73,9 @@ Feature vector length: 4416
 Test Accuracy of SVC =  0.993
 ```
 
-###Sliding Window Search
+### Sliding Window Search
 
-####1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
+#### 1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
 
 First, I decided on 4 different scales to cover all the appearances of the cars at different distances. I used sliding windows of sizes 64x64, 128x128, 196x196 and 256x256. Then, slided windows in the lower half of the image with 0.75 overlap. Because per frame processing time increases linearly with the total number of slidipng windows, I performed sliding window search only on the right upper half of the image as the project video contains car on the right of the egocar only. Here is the different scales of sliding windows that I used:
 
@@ -85,7 +85,7 @@ First, I decided on 4 different scales to cover all the appearances of the cars 
 ![alt text][image4d]
 ![alt text][image4e]
 
-####2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
+#### 2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
 Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result. 
 
@@ -101,11 +101,11 @@ Here are some detections:
 
 ### Video Implementation
 
-####1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
+#### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
 Here's a [link to my video result](https://youtu.be/oclIsCA3By0)
 
 
-####2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
+#### 2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
 
 I used heatmap approach suggested in the tutorials. For this, first, I extracted car candidates in the form of bounding box, then I stored bounding boxes from each frame in a fixed size queue structure implemented in `vehicle_detection()` class. When detection result is queried, I simply sum all the inner areas of detection windows inside the queue and represent them as heatmap. I used 25 for both the queue size and threshold level. In order to eliminate false detections, I threshold resulting heatmap and use `label()` function to label uniquely each connected components in the thresholded heatmap. Then, I constructed bounding boxes to cover the area of each blob detected.  
 
