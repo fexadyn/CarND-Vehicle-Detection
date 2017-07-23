@@ -65,7 +65,7 @@ Test Accuracy of SVC =  0.993
 
 #### 1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
 
-First, I decided on 4 different scales to cover all the appearances of the cars at different distances. I used sliding windows of sizes 64x64, 128x128, 196x196 and 256x256. Then, slided windows in the lower half of the image with 0.75 overlap. Because per frame processing time increases linearly with the total number of slidipng windows, I performed sliding window search only on the right upper half of the image as the project video contains car on the right of the egocar only. Here is the different scales of sliding windows that I used:
+First, I decided on 4 different scales to cover all the appearances of the cars at different distances. I used sliding windows of sizes 64x64, 128x128, 196x196 and 256x256. Then, slided windows in the lower half of the image with 0.75 overlap. Because per frame processing time increases linearly with the total number of slidipng windows, I performed sliding window search only on the right lower half of the image as the project video contains car on the right of the egocar only. Here is the different scales of sliding windows that I used:
 
 ![alt text][image4a]
 ![alt text][image4b]
@@ -74,8 +74,6 @@ First, I decided on 4 different scales to cover all the appearances of the cars 
 ![alt text][image4e]
 
 #### 2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
-
-Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result. 
 
 Here are some detections:
 
